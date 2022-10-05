@@ -29,40 +29,4 @@ exemplo do repositório https://github.com/BernardoLima92/STM32F103_UART_TIMER.
 ![UART_Receive_Code](https://user-images.githubusercontent.com/114233216/194179164-7635b2be-dacb-4eb2-ac2a-0751536eef5a.png)
 
 
-_______________________________________________________________________________________________________________________________________
-#include "main.h"
-#include <string.h>
 
-UART_HandleTypeDef huart1;
-
-char recebido[10]; 	// buffer que armazena a string recebida.
-char resp1[4] = {'n', 'e', 'x', 't'};
-int ret;
-
-void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_USART1_UART_Init(void);
-
-int main(void)
-{
-  HAL_Init();
-
-  SystemClock_Config();
-
-  MX_GPIO_Init();
-  MX_USART1_UART_Init();
-
-  while (1)
-  {
-
-	  HAL_UART_Receive(&huart1, recebido, 6, 100);
-	  ret = strncmp(recebido, resp1, 4);
-
-	  if (ret == 0){		// Se ret = 0 as duas strings são iguais.
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
-		  recebido[0] = 'a';
-	  }
-
-  }
-}
-_______________________________________________________________________________________________________________________________________
